@@ -5,6 +5,14 @@
 
 ---
 
+### 📦 Quick Download
+
+[<img src="https://img.shields.io/badge/⬇️_Download_jPit_Extension-(.zip)-14B8A6?style=for-the-badge&logo=github&logoColor=white" height="40">](https://github.com/posathanmai1-lang/jPit/archive/refs/heads/main.zip)
+
+*Click the button above to download the extension ZIP instantly!*
+
+---
+
 ## ✨ Why jPit?
 
 Legacy paste unblocking extensions fail on modern web applications because they rely solely on basic event cancellation (`e.stopImmediatePropagation()`). This frequently breaks **React / Vue / Angular** form component states, ignores `beforeinput` event blockers, fails on closed Shadow DOM elements, and gets hijacked by site hotkey scripts.
