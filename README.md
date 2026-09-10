@@ -33,13 +33,13 @@ Legacy paste unblocking extensions fail on modern web applications because they 
 
 ## 📥 How to Install (Quick Setup)
 
+[<img src="https://img.shields.io/badge/⬇️_Download_jPit_Extension-(.zip)-14B8A6?style=for-the-badge&logo=github&logoColor=white" height="38">](https://github.com/posathanmai1-lang/jPit/archive/refs/heads/main.zip)
+
 ### Option A: Install Unpacked Extension (Chrome, Edge, Brave)
 
-1. **Download / Clone Repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/jPit.git
-   ```
-   *(Or click **Code ➔ Download ZIP** on GitHub and extract it).*
+1. **Download & Extract ZIP**:
+   Click the **[⬇️ Download jPit Extension (.zip)](https://github.com/posathanmai1-lang/jPit/archive/refs/heads/main.zip)** button above and extract the ZIP file to your computer.
+   *(Or clone the repository: `git clone https://github.com/posathanmai1-lang/jPit.git`)*.
 
 2. **Open Extensions Page**:
    - **Microsoft Edge**: Go to `edge://extensions/`
