@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <script src="popup.js" type="module"></script>
+  </head>
+  <body>
+    <form class="form">
+      <fieldset>
+        <p>Add/edit patterns used to activate this extension:</p>
+        <ul class="container">
+        </ul>
+        <button class="add" type="button">Add Pattern</button>
+        <p>Each pattern will be evaluated as a <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">JavaScript Regular Expression</a>.</p>
+        <p>The above list of patterns are those that match the current page's location, along with those you may have just added, to see all configured patterns <a class="options" href="#">view the extension's options page</a>.</p>
+      </fieldset>
+      <fieldset>
+        <button type="submit">Save</button>
+        <button class="cancel" type="button">Cancel</button>
+      </fieldset>
+    </form>
+
+    <template id="existing">
+      <li>
+        <input class="input" type="text"/>
+        <button class="delete" type="button">&#x2716;</button>
+      </li>
+    </template>
+
+    <template id="new">
+      <li>
+        <input class="input" type="text"/>
+      </li>
+    </template>
+  </body>
+</html>

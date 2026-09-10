@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>I'm fucking with paste</title>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <p>The input boxes below doesn't let you copy or paste stuff in it; every
+    time a page like this is created, a kitten is killed.</p>
+    <p>(This is a form in the root document.)</p>
+    <form>
+      <p>Go ahead, try to paste:</p>
+      <input id="attribute" type="text" oncopy="return false;" oncut="return false;" onpaste="return false;" />
+      <input id="listener" type="text" />
+      <input id="property" type="text" />
+    </form>
+    <iframe src="./iframe.html"></iframe>
+  </body>
+</html>
