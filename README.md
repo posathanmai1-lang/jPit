@@ -38,8 +38,9 @@ Legacy paste unblocking extensions fail on modern web applications because they 
 ### Option A: Install Unpacked Extension (Chrome, Edge, Brave)
 
 1. **Download & Extract ZIP**:
-   Click the **[⬇️ Download jPit Extension (.zip)](https://github.com/posathanmai1-lang/jPit/archive/refs/heads/main.zip)** button above and extract the ZIP file to your computer.
-   *(Or clone the repository: `git clone https://github.com/posathanmai1-lang/jPit.git`)*.
+   - Click the **[⬇️ Download jPit Extension (.zip)](https://github.com/posathanmai1-lang/jPit/archive/refs/heads/main.zip)** button above.
+   - **Extract the ZIP file** (Right-click ➔ *Extract All*). 
+   - *(Note: Chrome/Edge "Load unpacked" requires an **extracted folder**, not the raw `.zip` file).*
 
 2. **Open Extensions Page**:
    - **Microsoft Edge**: Go to `edge://extensions/`
@@ -50,7 +51,7 @@ Legacy paste unblocking extensions fail on modern web applications because they 
    - Toggle **Developer mode** in the top-right corner.
 
 4. **Load Extension**:
-   - Click **Load unpacked** and select the `src` directory inside the jPit folder.
+   - Click **Load unpacked** and select the **extracted folder** (containing `manifest.json` or the `src` folder).
    - 🎉 **Done!** jPit is now active across all websites.
 
 ---
