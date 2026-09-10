@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jPit Anti-Bypass Verification Test Harness</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f8fafc; color: #1e293b; }
+    .tc-card { background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .tc-title { font-weight: bold; margin-bottom: 8px; }
+    input[type="text"], textarea { width: 100%; max-width: 400px; padding: 8px; margin-top: 4px; border: 1px solid #94a3b8; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>jPit Anti-Bypass Test Harness (12 Vectors)</h1>
+
+  <!-- TC01 -->
+  <div class="tc-card">
+    <div class="tc-title">TC01: Standard input with onpaste="return false;"</div>
+    <input type="text" id="tc01" onpaste="return false;" placeholder="Try pasting here">
+  </div>
+
+  <!-- TC02 -->
+  <div class="tc-card">
+    <div class="tc-title">TC02: Textarea with addEventListener('paste', e => e.preventDefault())</div>
+    <textarea id="tc02" placeholder="Try pasting here"></textarea>
+    <script>
+      document.getElementById('tc02').addEventListener('paste', e => e.preventDefault(), true);
+    </script>
+  </div>
+
+  <!-- TC03 -->
+  <div class="tc-card">
+    <div class="tc-title">TC03: Simulated React Controlled Input (Synthetic State)</div>
+    <input type="text" id="react-input" placeholder="React controlled input">
+    <button id="react-submit">Submit State</button>
+    <div id="react-result" style="margin-top: 4px; font-weight: bold;"></div>
+    <script>
+      (function() {
+        let reactState = '';
+        const input = document.getElementById('react-input');
+        input.addEventListener('paste', e => e.preventDefault());
+        input.addEventListener('input', e => { reactState = e.target.value; });
+        document.getElementById('react-submit').addEventListener('click', () => {
+          document.getElementById('react-result').textContent = reactState;
+        });
+      })();
+    </script>
+  </div>
+
+  <!-- TC06 -->
+  <div class="tc-card">
+    <div class="tc-title">TC06: beforeinput Event Interceptor (inputType === 'insertFromPaste')</div>
+    <input type="text" id="tc06" placeholder="beforeinput blocked input">
+    <script>
+      document.getElementById('tc06').addEventListener('beforeinput', e => {
+        if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </div>
+
+  <!-- TC07 -->
+  <div class="tc-card">
+    <div class="tc-title">TC07: Closed Shadow DOM Password Input</div>
+    <div id="shadow-host"></div>
+    <script>
+      (function() {
+        const host = document.getElementById('shadow-host');
+        const shadow = host.attachShadow({ mode: 'closed' });
+        shadow.innerHTML = `<input type="text" id="shadow-input" placeholder="Shadow DOM input">`;
+        shadow.querySelector('input').addEventListener('paste', e => e.preventDefault());
+      })();
+    </script>
+  </div>
+
+  <!-- TC08 -->
+  <div class="tc-card">
+    <div class="tc-title">TC08: System Hotkey Theft (keydown Ctrl+V / Cmd+V e.preventDefault())</div>
+    <input type="text" id="tc08" placeholder="Hotkey blocked input">
+    <script>
+      window.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </div>
+
+  <!-- TC09 -->
+  <div class="tc-card">
+    <div class="tc-title">TC09: Right-Click Context Menu Blocker</div>
+    <div id="tc09-box" style="padding: 10px; background: #e2e8f0;">Right-click blocked box</div>
+    <script>
+      document.getElementById('tc09-box').oncontextmenu = () => false;
+    </script>
+  </div>
+
+  <!-- TC10 -->
+  <div class="tc-card">
+    <div class="tc-title">TC10: CSS Selection Lock</div>
+    <div id="tc10-text" style="user-select: none; -webkit-user-select: none;">Try highlighting this text</div>
+  </div>
+
+</body>
+</html>

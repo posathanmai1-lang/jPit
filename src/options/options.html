@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jPit Settings & Rule Dashboard</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>jPit Settings & Rules Manager <span style="font-size: 13px; font-weight: 500; color: var(--accent-teal); margin-left: 6px;">— by Thanmai</span></h1>
+        <div class="subtitle">Customize domain rules, default unblocking behavior, and backup settings.</div>
+      </div>
+    </header>
+
+    <div class="section-card">
+      <div class="section-title">Global Operating Mode</div>
+      <div class="form-group">
+        <select id="global-mode-select">
+          <option value="smart_auto">Smart Auto Mode (Unblock Paste/Copy safely)</option>
+          <option value="aggressive">Aggressive Mode (Unblock Paste, Copy, Right-Click, Selection globally)</option>
+          <option value="disabled">Disabled globally</option>
+        </select>
+        <button class="btn" id="save-mode-btn">Save Preference</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">Domain Rules Engine</div>
+      <div class="form-group">
+        <input type="text" id="rule-pattern" placeholder="e.g. *.bank.com or github.com" style="flex: 2;">
+        <select id="rule-type">
+          <option value="wildcard">Wildcard</option>
+          <option value="exact">Exact</option>
+          <option value="regex">Regex</option>
+        </select>
+        <button class="btn" id="add-rule-btn">Add Rule</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Type</th>
+            <th>Paste</th>
+            <th>Copy</th>
+            <th>Right-Click</th>
+            <th>Selection</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="rules-table-body">
+          <!-- Dynamic rules -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">Data Backup & Restore</div>
+      <div class="action-row">
+        <button class="btn btn-secondary" id="export-json-btn">Export Settings JSON</button>
+        <input type="file" id="import-json-input" accept=".json" style="display: none;">
+        <button class="btn btn-secondary" id="import-json-btn">Import Settings JSON</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 24px; padding-bottom: 24px; font-size: 12px; color: #64748B;">
+      jPit Extension — Created by <strong style="color: #14B8A6;">Thanmai</strong>
+    </div>
+  </div>
+
+  <script src="../lib/browser-polyfill.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

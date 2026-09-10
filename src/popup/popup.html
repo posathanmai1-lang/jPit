@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jPit Popup</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <span>jPit <span style="font-size: 12px; font-weight: 500; color: var(--accent-teal); margin-left: 4px;">— by Thanmai</span></span>
+    </div>
+  </div>
+
+  <div class="domain-card">
+    <div>
+      <div class="domain-name" id="domain-display">Loading...</div>
+      <div class="domain-status" id="domain-status">Active on this site</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="master-toggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="toggles-section">
+    <div class="toggle-pill active" id="pill-paste">
+      <div class="toggle-pill-title">📋 Paste</div>
+      <div class="toggle-pill-state" id="state-paste">Enabled</div>
+    </div>
+    <div class="toggle-pill active" id="pill-copy">
+      <div class="toggle-pill-title">✂️ Copy</div>
+      <div class="toggle-pill-state" id="state-copy">Enabled</div>
+    </div>
+    <div class="toggle-pill" id="pill-context">
+      <div class="toggle-pill-title">🖱️ Right-Click</div>
+      <div class="toggle-pill-state" id="state-context">Disabled</div>
+    </div>
+    <div class="toggle-pill" id="pill-select">
+      <div class="toggle-pill-title">✋ Text Select</div>
+      <div class="toggle-pill-state" id="state-select">Disabled</div>
+    </div>
+  </div>
+
+  <div class="stats-card">
+    <div>
+      <div class="stat-num" id="stat-pastes">0</div>
+      <div class="stat-label">Pastes Unblocked</div>
+    </div>
+    <div>
+      <div class="stat-num" id="stat-copies">0</div>
+      <div class="stat-label">Copies Allowed</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="#" class="footer-btn" id="open-options">⚙️ Advanced Rules</a>
+    <span style="font-size: 11px; color: #94A3B8;">by <strong style="color: #14B8A6;">Thanmai</strong></span>
+  </div>
+
+  <script src="../lib/browser-polyfill.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

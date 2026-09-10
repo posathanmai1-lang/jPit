@@ -1,0 +1,135 @@
+/* jPit Options Dashboard Styling */
+:root {
+  --bg-primary: #0B0F19;
+  --bg-card: #151D2A;
+  --accent-teal: #14B8A6;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --border-color: #263346;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+input[type="text"], select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+}
+
+input[type="text"]:focus, select:focus {
+  border-color: var(--accent-teal);
+}
+
+.btn {
+  background: var(--accent-teal);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--border-color);
+  color: var(--text-main);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.delete-btn {
+  color: #EF4444;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}

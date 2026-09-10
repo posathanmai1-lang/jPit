@@ -1,0 +1,9 @@
+# Logs & Temp Files
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Brain & scratch directories
+.system_generated/
+scratch/

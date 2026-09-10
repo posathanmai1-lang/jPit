@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "jPit — Just Paste it",
+  "version": "1.0.0",
+  "author": "Thanmai",
+  "description": "Bypass arbitrary paste, copy, right-click, and text selection restrictions seamlessly across all web apps. Created by Thanmai.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["lib/browser-polyfill.js", "content/isolated-bridge.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/main-engine.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}
