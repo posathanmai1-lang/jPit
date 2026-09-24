@@ -15,6 +15,8 @@ const DEFAULT_SETTINGS = {
 
 // In-memory tab configuration cache to persist toggles while tab is active
 const activeTabConfigs = new Map();
+// In-memory DevTools Shield activity cache per hostname
+const activeTabDetections = new Map();
 
 // Initialize default storage settings on extension installation
 browser.runtime.onInstalled.addListener(async () => {
@@ -48,6 +50,7 @@ async function getConfigForUrl(url) {
   const evalResult = RuleEvaluator.evaluateUrl(url, domainRules, globalMode);
   const config = {
     ...evalResult,
+    devToolsShield: evalResult.unblockDevTools ?? false,
     hotkeyShield: data.hotkeyShield ?? true,
     frameworkSynthesizer: data.frameworkSynthesizer ?? true
   };
@@ -75,13 +78,41 @@ function updateBadge(tabId, active) {
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'GET_TAB_CONFIG') {
     const targetUrl = message.url || (sender.tab ? sender.tab.url : '');
+    const hostname = getHostname(targetUrl);
     getConfigForUrl(targetUrl).then(config => {
       if (sender.tab && sender.tab.id) {
         updateBadge(sender.tab.id, config.active);
       }
-      sendResponse({ config });
+      sendResponse({
+        config,
+        detections: (hostname && activeTabDetections.get(hostname)) ? [...activeTabDetections.get(hostname)] : []
+      });
     });
     return true; // Keep message channel open for async response
+  }
+
+  if (message.type === 'DEVTOOLS_DETECTION') {
+    const targetUrl = message.url || (sender.tab ? sender.tab.url : '');
+    const hostname = getHostname(targetUrl);
+    if (hostname && message.detection) {
+      if (!activeTabDetections.has(hostname)) {
+        activeTabDetections.set(hostname, []);
+      }
+      const list = activeTabDetections.get(hostname);
+      list.push(message.detection);
+      if (list.length > 50) list.shift();
+    }
+    sendResponse({ success: true });
+    return true;
+  }
+
+  if (message.type === 'GET_TAB_DETECTIONS') {
+    const targetUrl = message.url || (sender.tab ? sender.tab.url : '');
+    const hostname = getHostname(targetUrl);
+    sendResponse({
+      detections: (hostname && activeTabDetections.get(hostname)) ? [...activeTabDetections.get(hostname)] : []
+    });
+    return true;
   }
 
   if (message.type === 'TOGGLE_TAB_MODE') {

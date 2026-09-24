@@ -59,4 +59,32 @@ test.describe('jPit Anti-Bypass Test Suite Verification', () => {
     await page.keyboard.press('Control+v');
     await expect(page.locator('#tc08')).toHaveValue('PAYLOAD_HOTKEY');
   });
+
+  test('TC13: DevTools shortcut interception bypassed', async () => {
+    // Enable DevTools shield on the page
+    await page.evaluate(() => {
+      window.dispatchEvent(new CustomEvent('jPit_ConfigUpdate', {
+        detail: { active: true, devToolsShield: true, unblockDevTools: true }
+      }));
+    });
+
+    await page.keyboard.press('F12');
+    // The site listener should have been blocked from cancelling the event
+    await expect(page.locator('#tc13-status')).toHaveText('Waiting for keypress...');
+  });
+
+  test('TC14: Debugger flooding in Function constructor neutralized', async () => {
+    await page.click('#tc14-btn');
+    await expect(page.locator('#tc14-status')).toHaveText('SUCCESS_WITHOUT_FREEZE');
+  });
+
+  test('TC15: Window dimension DevTools detection heuristic safe', async () => {
+    await page.click('#tc15-btn');
+    await expect(page.locator('#tc15-status')).toHaveText('HEURISTIC_SAFE');
+  });
+
+  test('TC16: Console getter trap neutralized', async () => {
+    await page.click('#tc16-btn');
+    await expect(page.locator('#tc16-status')).toHaveText('TRAP_NEUTRALIZED');
+  });
 });

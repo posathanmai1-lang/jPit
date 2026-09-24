@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       unblockPaste: true,
       unblockCopy: true,
       unblockContextMenu: false,
-      unblockSelection: false
+      unblockSelection: false,
+      unblockDevTools: false
     };
 
     domainRules.push(newRule);
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderRules() {
     rulesTableBody.innerHTML = '';
     if (domainRules.length === 0) {
-      rulesTableBody.innerHTML = `<tr><td colspan="7" style="color: #64748B; text-align: center;">No custom domain rules added yet.</td></tr>`;
+      rulesTableBody.innerHTML = `<tr><td colspan="8" style="color: #64748B; text-align: center;">No custom domain rules added yet.</td></tr>`;
       return;
     }
 
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <td><input type="checkbox" ${rule.unblockCopy ? 'checked' : ''} data-index="${index}" data-field="unblockCopy"></td>
         <td><input type="checkbox" ${rule.unblockContextMenu ? 'checked' : ''} data-index="${index}" data-field="unblockContextMenu"></td>
         <td><input type="checkbox" ${rule.unblockSelection ? 'checked' : ''} data-index="${index}" data-field="unblockSelection"></td>
+        <td><input type="checkbox" ${rule.unblockDevTools ? 'checked' : ''} data-index="${index}" data-field="unblockDevTools"></td>
         <td><span class="delete-btn" data-index="${index}">Delete</span></td>
       `;
       rulesTableBody.appendChild(tr);

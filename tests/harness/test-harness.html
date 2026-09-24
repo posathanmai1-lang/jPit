@@ -102,5 +102,74 @@
     <div id="tc10-text" style="user-select: none; -webkit-user-select: none;">Try highlighting this text</div>
   </div>
 
+  <!-- TC13 -->
+  <div class="tc-card">
+    <div class="tc-title">TC13: DevTools Shortcut Interception (F12, Ctrl+Shift+I preventDefault)</div>
+    <div id="tc13-status">Waiting for keypress...</div>
+    <script>
+      window.addEventListener('keydown', e => {
+        if (e.key === 'F12' || ((e.ctrlKey && e.shiftKey) && (e.key === 'I' || e.key === 'i'))) {
+          e.preventDefault();
+          document.getElementById('tc13-status').textContent = 'BLOCKED_BY_SITE';
+        }
+      });
+    </script>
+  </div>
+
+  <!-- TC14 -->
+  <div class="tc-card">
+    <div class="tc-title">TC14: Debugger Flooding Function Constructor Anti-Tamper</div>
+    <button id="tc14-btn">Run Dynamic Debugger</button>
+    <div id="tc14-status">Not executed</div>
+    <script>
+      document.getElementById('tc14-btn').addEventListener('click', () => {
+        try {
+          const fn = Function('debugger; return "SUCCESS_WITHOUT_FREEZE";');
+          const result = fn();
+          document.getElementById('tc14-status').textContent = result;
+        } catch (e) {
+          document.getElementById('tc14-status').textContent = 'ERROR: ' + e.message;
+        }
+      });
+    </script>
+  </div>
+
+  <!-- TC15 -->
+  <div class="tc-card">
+    <div class="tc-title">TC15: DevTools Window Dimension Heuristic Check</div>
+    <button id="tc15-btn">Check Heuristic</button>
+    <div id="tc15-status">Not tested</div>
+    <script>
+      document.getElementById('tc15-btn').addEventListener('click', () => {
+        const widthDiff = window.outerWidth - window.innerWidth;
+        const heightDiff = window.outerHeight - window.innerHeight;
+        // If spoofing is active, differences are normalized
+        document.getElementById('tc15-status').textContent = 
+          (widthDiff <= 160 && heightDiff <= 160) ? 'HEURISTIC_SAFE' : 'DEVTOOLS_DETECTED';
+      });
+    </script>
+  </div>
+
+  <!-- TC16 -->
+  <div class="tc-card">
+    <div class="tc-title">TC16: Console Getter Trap Anti-DevTools Probe</div>
+    <button id="tc16-btn">Trigger Console Probe</button>
+    <div id="tc16-status">Trap ready</div>
+    <script>
+      document.getElementById('tc16-btn').addEventListener('click', () => {
+        let trapTriggered = false;
+        const probe = {};
+        Object.defineProperty(probe, 'id', {
+          get: function() {
+            trapTriggered = true;
+            return 'TRAP_FIRED';
+          }
+        });
+        console.log(probe);
+        document.getElementById('tc16-status').textContent = trapTriggered ? 'TRAP_TRIGGERED' : 'TRAP_NEUTRALIZED';
+      });
+    </script>
+  </div>
+
 </body>
 </html>

@@ -21,4 +21,15 @@
       syncConfigWithMainEngine(message.config);
     }
   });
+
+  // Relay DevTools Shield detections from MAIN world engine to background service worker
+  window.addEventListener('jPit_DevToolsDetection', (event) => {
+    if (event.detail) {
+      runtime.sendMessage({
+        type: 'DEVTOOLS_DETECTION',
+        url: window.location.href,
+        detection: event.detail
+      }).catch(() => {});
+    }
+  });
 })();

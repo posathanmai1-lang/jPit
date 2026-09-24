@@ -25,6 +25,7 @@ Legacy paste unblocking extensions fail on modern web applications because they 
 - ⚡ **`beforeinput` Shield**: Neutralizes `beforeinput` event blockers (`inputType === 'insertFromPaste'`).
 - 📦 **Shadow DOM & Web Component Support**: Hooks `Element.prototype.attachShadow` to automatically extend unblocking shields into Web Components and closed Shadow Roots.
 - ⌨️ **System Hotkey Shield**: Protects `Ctrl+V` / `Cmd+V`, `Ctrl+C`, `Ctrl+X`, and `Ctrl+A` from site `keydown` handlers.
+- 🛠️ **DevTools Shield**: Neutralizes anti-debugging techniques including shortcut interception (F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C), dynamic `debugger;` loops, window-size DevTools detection heuristics, and console getter traps.
 - 🖱️ **Right-Click & Selection Unlock**: Brings back custom right-click menus and text highlighting without breaking site UI widgets.
 - 🌐 **Shift-Key Bypass**: Hold `Shift + Right Click` at any time to force the native browser context menu.
 - 🔒 **100% Private & Offline**: Zero analytics, zero tracking, zero external network requests. 100% offline security.

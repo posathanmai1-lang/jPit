@@ -35,7 +35,7 @@ class RuleEvaluator {
     try {
       hostname = new URL(url).hostname;
     } catch {
-      return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: false, unblockSelection: false };
+      return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: false, unblockSelection: false, unblockDevTools: false };
     }
 
     // Check specific custom rules first
@@ -46,22 +46,23 @@ class RuleEvaluator {
           unblockPaste: rule.unblockPaste ?? true,
           unblockCopy: rule.unblockCopy ?? true,
           unblockContextMenu: rule.unblockContextMenu ?? false,
-          unblockSelection: rule.unblockSelection ?? false
+          unblockSelection: rule.unblockSelection ?? false,
+          unblockDevTools: rule.unblockDevTools ?? false
         };
       }
     }
 
     // Default behavior modes
     if (defaultMode === 'disabled') {
-      return { active: false, unblockPaste: false, unblockCopy: false, unblockContextMenu: false, unblockSelection: false };
+      return { active: false, unblockPaste: false, unblockCopy: false, unblockContextMenu: false, unblockSelection: false, unblockDevTools: false };
     }
 
     if (defaultMode === 'aggressive') {
-      return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: true, unblockSelection: true };
+      return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: true, unblockSelection: true, unblockDevTools: false };
     }
 
-    // Smart Auto Mode (Default): Paste and Copy unblocked, Context menu & selection safe by default
-    return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: false, unblockSelection: false };
+    // Smart Auto Mode (Default): Paste and Copy unblocked, Context menu, selection & DevTools shield safe/opt-in by default
+    return { active: true, unblockPaste: true, unblockCopy: true, unblockContextMenu: false, unblockSelection: false, unblockDevTools: false };
   }
 }
 

@@ -5,6 +5,10 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Brain & scratch directories
+# Brain, AI & Scratch Directories
 .system_generated/
 scratch/
+.agents/
+.gemini/
+.idea/
+.vscode/

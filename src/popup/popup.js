@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pillCopy = document.getElementById('pill-copy');
   const pillContext = document.getElementById('pill-context');
   const pillSelect = document.getElementById('pill-select');
+  const pillDevTools = document.getElementById('pill-devtools');
+  const stateDevTools = document.getElementById('state-devtools');
+
+  const activityList = document.getElementById('activity-list');
+  const activityCount = document.getElementById('activity-count');
 
   const statPastes = document.getElementById('stat-pastes');
   const statCopies = document.getElementById('stat-copies');
@@ -20,7 +25,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     unblockPaste: true,
     unblockCopy: true,
     unblockContextMenu: false,
-    unblockSelection: false
+    unblockSelection: false,
+    unblockDevTools: false,
+    devToolsShield: false
   };
 
   // Fetch active tab
@@ -35,7 +42,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Request tab configuration
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, m => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[m]);
+  }
+
+  function renderActivity(detections = []) {
+    if (!activityList || !activityCount) return;
+    activityCount.textContent = detections.length;
+    if (detections.length === 0) {
+      activityList.innerHTML = '<div class="activity-empty">No DevTools blocks detected</div>';
+      return;
+    }
+
+    activityList.innerHTML = '';
+    const reversed = [...detections].reverse();
+    reversed.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'activity-item';
+      const timeStr = item.timestamp ? new Date(item.timestamp).toLocaleTimeString() : '';
+      el.innerHTML = `
+        <div><strong>${escapeHtml(item.detail)}</strong></div>
+        <div class="activity-item-time">${timeStr} • ${escapeHtml(item.technique)}</div>
+      `;
+      activityList.appendChild(el);
+    });
+  }
+
+  // Request tab configuration and detections
   if (currentTab) {
     browser.runtime.sendMessage({
       type: 'GET_TAB_CONFIG',
@@ -44,6 +84,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (response && response.config) {
         currentConfig = response.config;
         updateUIState();
+      }
+      if (response && response.detections) {
+        renderActivity(response.detections);
       }
     });
   }
@@ -63,9 +106,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     updatePill(pillCopy, document.getElementById('state-copy'), currentConfig.unblockCopy);
     updatePill(pillContext, document.getElementById('state-context'), currentConfig.unblockContextMenu);
     updatePill(pillSelect, document.getElementById('state-select'), currentConfig.unblockSelection);
+    if (pillDevTools && stateDevTools) {
+      updatePill(pillDevTools, stateDevTools, currentConfig.unblockDevTools || currentConfig.devToolsShield);
+    }
   }
 
   function updatePill(pillEl, stateEl, isEnabled) {
+    if (!pillEl || !stateEl) return;
     if (isEnabled && currentConfig.active) {
       pillEl.classList.add('active');
       stateEl.textContent = 'Enabled';
@@ -115,6 +162,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateUIState();
     sendConfigChange();
   });
+
+  if (pillDevTools) {
+    pillDevTools.addEventListener('click', () => {
+      const nextState = !(currentConfig.unblockDevTools || currentConfig.devToolsShield);
+      currentConfig.unblockDevTools = nextState;
+      currentConfig.devToolsShield = nextState;
+      updateUIState();
+      sendConfigChange();
+    });
+  }
 
   openOptions.addEventListener('click', (e) => {
     e.preventDefault();
